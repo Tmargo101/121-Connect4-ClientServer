@@ -11,6 +11,11 @@ public class ServerGUI extends JFrame {
 
    private ServerSocket sSocket = null;
    public static final int SERVER_PORT = 23001;
+   public int clientsConnected = 0;
+   
+   public JLabel jlLog = new JLabel("Log:");
+   public JTextArea jLogArea = new JTextArea(10, 35);
+   
 
    public ServerGUI() {
       // Window setup
@@ -20,6 +25,13 @@ public class ServerGUI extends JFrame {
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       
       this.add(new JLabel("Server GUI - Coming Soon", SwingConstants.CENTER));
+      
+      JPanel central = new JPanel();
+      central.add
+      
+      
+      
+      
       
       this.setVisible(true); //last note
    
@@ -37,6 +49,8 @@ public class ServerGUI extends JFrame {
          try {
             // Wait for a connection
             cSocket = sSocket.accept();
+            clientsConnected++;
+            
 
          }
          catch(IOException e1) {
@@ -76,7 +90,7 @@ public class ServerGUI extends JFrame {
             String temp_num = scn.nextLine();
             System.out.println("Column Number: " + temp_num);
             
-            int columnNum = Integer.parseInt("1");
+            int columnNum = Integer.parseInt(temp_num);
             
             String response = changeCourse(columnNum);
             
