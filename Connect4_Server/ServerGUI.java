@@ -44,7 +44,6 @@ public class ServerGUI extends JFrame {
          }
          
          System.out.println("Client connected!");
-         System.out.println(cSocket);
          
          ClientThread ct = new ClientThread(cSocket);
          Thread t = new Thread(ct);
@@ -74,18 +73,17 @@ public class ServerGUI extends JFrame {
          }
          while (scn.hasNextLine()) {
             String temp_num = scn.nextLine();
-            System.out.println("Column Number: " + temp_num);
+            System.out.println("Column Number:" + temp_num);
+            System.out.println(cSocket);
             
-            int columnNum = Integer.parseInt("1");
+            int columnNum = Integer.parseInt(temp_num);
+            
             
             String response = changeCourse(columnNum);
             
             pwt.println(response); 
             pwt.flush();
-            System.out.println("Response Sent: " + response);
          }
-         
-         System.out.println("Client disconnected!");
          
       }
    }
@@ -99,16 +97,9 @@ public class ServerGUI extends JFrame {
    
    public String changeCourse(int columnNum) {
       
-      int columnNum_1 = columnNum;
-      int rowNum = 0;
-      int state = 1;
-      int playerTurn = 2;
-      int winCondition = 0;
+      columnNum++;
       
-      String respond = Integer.toString(columnNum_1) + "," + Integer.toString(rowNum) + "," + Integer.toString(state) + "," + Integer.toString(playerTurn) + "," + Integer.toString(winCondition);
-      
-      
-      return respond;
+      return "0,0,1,2,0";
       
    }
 
