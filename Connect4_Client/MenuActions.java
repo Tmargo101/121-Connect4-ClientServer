@@ -13,9 +13,6 @@ class MenuActions implements ActionListener {
       if(ae.getActionCommand().equals("Exit")) {
          System.out.print("Exit Called");
          MainGUI.exit();
-      } else if(ae.getActionCommand().equals("Reset Game")) {
-         System.out.println("Reset Game");
-         MainGUI.resetBoard();
       } else if(ae.getActionCommand().equals("Instructions")) {
          MainGUI.showInstructions();
       }

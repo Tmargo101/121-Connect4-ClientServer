@@ -33,7 +33,6 @@ public class MainGUI extends JFrame{
    JMenu options = new JMenu("Options");
    JMenu help = new JMenu("Help");
    JMenuItem instructions = new JMenuItem("Instructions");
-   JMenuItem resetItem = new JMenuItem("Reset Game");
    JMenuItem exitItem = new JMenuItem("Exit");
    JLabel gameName = new JLabel("Connect4");
    public static JLabel whosTurn = new JLabel("Red's Turn");
@@ -66,12 +65,10 @@ public class MainGUI extends JFrame{
       setJMenuBar(menuBar);
       menuBar.add(options);
       menuBar.add(help);
-      options.add(resetItem);
       options.add(exitItem);
       help.add(instructions);
       
       instructions.addActionListener(mActions);
-      resetItem.addActionListener(mActions);
       exitItem.addActionListener(mActions);
       
       
@@ -221,6 +218,8 @@ public class MainGUI extends JFrame{
    */
    public static void exit() {
       JOptionPane.showMessageDialog(null, "Thanks for Playing.  Press OK to Exit.");
+      clientWriter.flush();
+      clientWriter.close();
       System.exit(0);
    }
    
@@ -233,6 +232,40 @@ public class MainGUI extends JFrame{
       JOptionPane.showMessageDialog(null, insTextNew);
  
    }
+   
+   /**
+      Updates the JLabel called whosTurn
+      @param playerTurn Specified data that is recieved from the server by the ServerListener class
+   */
+   public void updatePlayerTurnGUI(String playerTurn){
+      if(playerTurn.equals(1)){
+         whosTurn.setText("Red's Turn");
+      }
+      else{
+         whosTurn.setText("Yellow's Turn");
+      }
+   }
+   
+   
+   /**
+      Checks to see if anyone body has won the game based on data sent back from the server
+      @param winInt Specified data that is recieved from the server by the ServerListener class
+   */
+   public void winCheck(String winInt){
+      if(winInt.equals(1)){
+         JOptionPane.showMessageDialog(null, "Red wins!");
+         resetBoard();
+      }
+      else if(winInt.equals(2)){
+         JOptionPane.showMessageDialog(null, "Yellow wins!");
+         resetBoard();
+      }
+      else if(winInt.equals(3)){
+         JOptionPane.showMessageDialog(null, "Stalemate!");
+      }
+   }
+   
+   
    
    //THIS IS WHERE THE NETWORKING STUFF HAPPENS
    
@@ -258,7 +291,6 @@ public class MainGUI extends JFrame{
       
       clientWriter.println(columnNum);
       clientWriter.flush();
-      //clientWriter.close();
    }
    
    
@@ -292,8 +324,16 @@ public class MainGUI extends JFrame{
          while(clientReader.hasNextLine()){
             String serverData = clientReader.nextLine();
             String[] parsedData = serverData.split(",");
-            System.out.println("Received: " + serverData);
+            System.out.println("Recieved: " + serverData);
+            
+            // We updated the board based on data recieved from server through the setSlot method
             setSlot(Integer.parseInt(parsedData[0]),Integer.parseInt(parsedData[1]),Integer.parseInt(parsedData[2]));
+            
+            // Change the player turn in the GUI based on output from server
+            updatePlayerTurnGUI(parsedData[3]);
+            
+            // Checks for win or stalemate values sent from the server
+            winCheck(parsedData[4]);
          }
       }
    } //END OF SERVERLISTENER CLASS
