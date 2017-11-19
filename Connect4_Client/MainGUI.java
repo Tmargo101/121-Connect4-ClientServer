@@ -335,11 +335,11 @@ public class MainGUI extends JFrame {
       } else if(Integer.parseInt(winInt) == 4) {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
-         updatePlayerTurnGUI("2");
+         updatePlayerTurnGUI("0");
       } else if (Integer.parseInt(winInt) == 5) {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
-         updatePlayerTurnGUI("2");
+         updatePlayerTurnGUI("0");
          
       }
    }
