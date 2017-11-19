@@ -58,7 +58,7 @@ public class MainGUI extends JFrame {
    /**
       Takes care of the main setup of the gui.
    */
-   public MainGUI(Socket inSocket){
+   public MainGUI(Socket inSocket, String inUsername){
       
       setSize(GUI_WIDTH, GUI_HEIGHT);
       setLocationRelativeTo(null);
@@ -230,6 +230,8 @@ public class MainGUI extends JFrame {
       } else if (clientIsPlayer == 1) {
          updatePlayerTurnGUI("0");
       }
+      
+      currentTurn = currentTurn - 2;
       
 //       if (MainGUI.getPlayer() == 0) {
 //          currentColor = "Red";
