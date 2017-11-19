@@ -1,5 +1,6 @@
 package Connect4_Client;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -67,6 +68,8 @@ public class BoardColumn extends JPanel {
          if(slots[5].getState() == 1 || slots[5].getState() == 2) {
             topBtn.setEnabled(false);
             columnFull = true;
+         } else {
+            columnFull = false;
          }
       }
       

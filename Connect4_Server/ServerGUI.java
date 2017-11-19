@@ -68,7 +68,6 @@ public class ServerGUI extends JFrame {
       catch(IOException e1) {
          System.out.println("Uh oh! An exception");
       }
-
       
    while(true) {
          Socket cSocket = null; //Client Socket
