@@ -15,7 +15,7 @@ It also holds all variables which are needed GameWide, as GameLogic
 cannot hold them.
 */
 
-public class MainGUI extends JFrame{
+public class MainGUI extends JFrame {
 //Original 1260x900
    public static final int GUI_WIDTH =  1260;
    public static final int GUI_HEIGHT = 900;
@@ -39,7 +39,7 @@ public class MainGUI extends JFrame{
    JMenuItem instructions = new JMenuItem("Instructions");
    JMenuItem exitItem = new JMenuItem("Exit");
    JLabel gameName = new JLabel("Connect4");
-   public static JLabel whosTurn = new JLabel("Red's Turn");
+   public static JLabel whosTurn = new JLabel("Waiting for other player...");
    public static JLabel turnNumber = new JLabel("Current Turn: 0");
    
    JPanel board = new JPanel();
@@ -55,7 +55,7 @@ public class MainGUI extends JFrame{
    /**
       Takes care of the main setup of the gui.
    */
-   public MainGUI(){
+   public MainGUI(Socket inSocket){
       
       setSize(GUI_WIDTH, GUI_HEIGHT);
       setLocationRelativeTo(null);
@@ -115,19 +115,22 @@ public class MainGUI extends JFrame{
          columns.get(i).disableBtn();
       }
       
-      try{
-         username = JOptionPane.showInputDialog(this, "Username: ");
-         ip = JOptionPane.showInputDialog(this, "IP Address of Server: ");
-         
-         validateSetupData(username, ip);
-         
-         socket = new Socket(ip, SERVER_PORT);
-         System.out.println("You've connected to the server");
-         ServerListener sl = new ServerListener();
-      }
-      catch(UnknownHostException uhe){System.out.println("The host might not exist: " + uhe);}
-      catch(IOException ioe){System.out.println("IOException: " + ioe);}
+      socket = inSocket;
+      ServerListener sl = new ServerListener();
       
+     //  try{
+//          username = JOptionPane.showInputDialog(this, "Username: ");
+//          ip = JOptionPane.showInputDialog(this, "IP Address of Server: ");
+//          
+//          validateSetupData(username, ip);
+//          
+//          socket = new Socket(ip, SERVER_PORT);
+//          System.out.println("You've connected to the server");
+//          ServerListener sl = new ServerListener();
+//       }
+//       catch(UnknownHostException uhe){System.out.println("The host might not exist: " + uhe);}
+//       catch(IOException ioe){System.out.println("IOException: " + ioe);}
+//       
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setVisible(true);
    } 
@@ -369,9 +372,9 @@ public class MainGUI extends JFrame{
    }
    
    
-   public static void main(String[] args){
-      new MainGUI();
-   }
+//    public static void main(String[] args){
+//       new MainGUI();
+//    }
    
    //INNER CLASS 
    class ServerListener implements Runnable {
