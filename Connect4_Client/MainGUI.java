@@ -1,5 +1,3 @@
-package Connect4_Client;
-
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -120,20 +118,6 @@ public class MainGUI extends JFrame {
       socket = inSocket;
       ServerListener sl = new ServerListener();
       
-     //  try{
-//          username = JOptionPane.showInputDialog(this, "Username: ");
-//          ip = JOptionPane.showInputDialog(this, "IP Address of Server: ");
-//          
-//          validateSetupData(username, ip);
-//          
-//          socket = new Socket(ip, SERVER_PORT);
-//          System.out.println("You've connected to the server");
-//          ServerListener sl = new ServerListener();
-//       }
-//       catch(UnknownHostException uhe){System.out.println("The host might not exist: " + uhe);}
-//       catch(IOException ioe){System.out.println("IOException: " + ioe);}
-//
-      add(new ChatClient(username,ip), BorderLayout.EAST);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setVisible(true);
    } 
@@ -339,20 +323,18 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
-         //Re-enables topBtns (If any columns were full)
+         //Re-enables all buttons (for if the column was full)
          for (int i = 0; i < columns.size(); i++) {
             columns.get(i).checkColumnFull();
          }
-
       } else if (Integer.parseInt(winInt) == 5) {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
-         //Re-enables topBtns (If any columns were full)
+         //Re-enables all buttons (for if the column was full)
          for (int i = 0; i < columns.size(); i++) {
             columns.get(i).checkColumnFull();
          }
-
          
       }
    }
