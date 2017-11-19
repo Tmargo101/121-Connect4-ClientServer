@@ -1,3 +1,5 @@
+//SERVER & CHAT MIXED - 6:20 PM (BH)
+
 package Connect4_Server;
 
 import javax.swing.*;
