@@ -194,6 +194,10 @@ public class GameInstance extends Thread {
             currentColumn = Integer.parseInt(clientOneData);
             logic.playerTurn(currentColumn);
             System.out.println("Now it's " + currentPlayer + "'s Turn");
+            System.out.println("Client One isClosed: " + socketOne.isClosed());
+            System.out.println("Client One isConnected: " + socketOne.isConnected());
+            System.out.println("Client Two isClosed: " + socketTwo.isClosed());
+            System.out.println("Client Two isConnected: " + socketTwo.isConnected());
             
          } else if (currentPlayer == 1) {
             String clientTwoData = clientReaderTwo.nextLine();
@@ -201,6 +205,11 @@ public class GameInstance extends Thread {
             currentColumn = Integer.parseInt(clientTwoData);
             logic.playerTurn(currentColumn);
             System.out.println("Now it's " + currentPlayer + "'s Turn");
+            System.out.println("Now it's " + currentPlayer + "'s Turn");
+            System.out.println("Client One isClosed: " + socketOne.isClosed());
+            System.out.println("Client One isConnected: " + socketOne.isConnected());
+            System.out.println("Client Two isClosed: " + socketTwo.isClosed());
+            System.out.println("Client Two isConnected: " + socketTwo.isConnected());
          }
          }
       }
