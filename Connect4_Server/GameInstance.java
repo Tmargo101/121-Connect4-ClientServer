@@ -45,6 +45,12 @@ public class GameInstance extends Thread {
       System.out.println("Instance: " + socketOne + ", Is connected = " + socketOne.isConnected());
       System.out.println("Instance: " + socketTwo + ", Is connected = " + socketTwo.isConnected());
       
+      try{
+         clientWriterOne = new PrintWriter(new OutputStreamWriter(socketOne.getOutputStream()));
+         clientWriterTwo = new PrintWriter(new OutputStreamWriter(socketTwo.getOutputStream()));
+      }
+      catch(IOException ioe){System.out.println("Tried to create Printwriters in constructor" + ioe);}
+      
       currentGame = inGameId;
       //Create columns for this game
       for(int i = 0; i < 7; i++) {
@@ -129,17 +135,8 @@ public class GameInstance extends Thread {
    /**We need to identify who's player 0 (red), and who's player 1 (yellow).
    When the new GameInstance is constructed, this sends a string which will tell the game who's starting
    and who's not.
-    
    */
    public static void sendStartingData(){
-      try{
-         clientWriterOne = new PrintWriter(new OutputStreamWriter(socketOne.getOutputStream()));
-         clientWriterTwo = new PrintWriter(new OutputStreamWriter(socketTwo.getOutputStream()));
-
-      }
-      catch(IOException ioe) {
-         System.out.println("Error" + ioe);
-      }
             
       clientWriterOne.println("0,0,0,0,4");
       clientWriterTwo.println("0,0,0,0,5");
@@ -152,14 +149,6 @@ public class GameInstance extends Thread {
    
    
   public static void sendNetworkData(){
-      try{
-         clientWriterOne = new PrintWriter(new OutputStreamWriter(socketOne.getOutputStream()));
-         clientWriterTwo = new PrintWriter(new OutputStreamWriter(socketTwo.getOutputStream()));
-
-      }
-      catch(IOException ioe) {
-         System.out.println("Error" + ioe);
-      }
       
       clientWriterOne.println(networkResponse);
       clientWriterTwo.println(networkResponse);
@@ -211,11 +200,24 @@ public class GameInstance extends Thread {
             System.out.println("Client Two isClosed: " + socketTwo.isClosed());
             System.out.println("Client Two isConnected: " + socketTwo.isConnected());
          }
+            if (currentPlayer == 0) {
+               String clientOneData = clientReaderOne.nextLine();
+               System.out.println("Player 1 sent: " + clientOneData);
+               currentColumn = Integer.parseInt(clientOneData);
+               logic.playerTurn(currentColumn);
+               System.out.println("Now it's " + currentPlayer + "'s Turn");
+               
+            } else if (currentPlayer == 1) {
+               String clientTwoData = clientReaderTwo.nextLine();
+               System.out.println("Player 2 sent: " + clientTwoData);
+               currentColumn = Integer.parseInt(clientTwoData);
+               logic.playerTurn(currentColumn);
+               System.out.println("Now it's " + currentPlayer + "'s Turn");
+            }
          }
       }
    } //END OF SERVERLISTENER CLASS
 
 
    
-   //
 }//End GameInstance
