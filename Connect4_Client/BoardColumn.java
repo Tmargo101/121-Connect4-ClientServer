@@ -20,10 +20,12 @@ public class BoardColumn extends JPanel {
       
       public static final int columnWidth = (MainGUI.GUI_WIDTH / 7);
       public static final int columnHeight = (MainGUI.GUI_HEIGHT - MainGUI.HEADER_HEIGHT);
-      
+     
+       
       private BoardSlot[] slots = new BoardSlot[6];
       
       JButton topBtn = new JButton("Press Me!");
+      private boolean columnFull = false;
       JPanel slotPanel = new JPanel();
       
       public int columnNum = 0;
@@ -59,11 +61,20 @@ public class BoardColumn extends JPanel {
          return slots.length;
       }
       
+      public void checkColumnFull() {
+         if(slots[5].getState() == 1 || slots[5].getState() == 2) {
+            topBtn.setEnabled(false);
+            columnFull = true;
+         }
+      }
+      
       /**
          Enables the topBtn.
       */
-      public void enableBtn() {
-         topBtn.setEnabled(true);
+      public void enableBtn() { 
+         if (columnFull == false) {
+            topBtn.setEnabled(true);
+         }
       }
       
       /**
@@ -71,7 +82,9 @@ public class BoardColumn extends JPanel {
       */
       
       public void disableBtn() {
-         topBtn.setEnabled(false);
+         if (columnFull == false) {
+            topBtn.setEnabled(false);
+         }
       }
       
       /**

@@ -205,6 +205,7 @@ public class MainGUI extends JFrame {
    public static void setSlot(int inX, int inY, int inState) {
       columns.get(inX).getSlot(inY).setState(inState);
       columns.get(inX).getSlot(inY).updateState();
+      columns.get(inX).checkColumnFull();
    } 
    
    /**
