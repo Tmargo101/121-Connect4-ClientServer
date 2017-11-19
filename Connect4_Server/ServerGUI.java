@@ -10,6 +10,7 @@ import java.io.*;
 public class ServerGUI extends JFrame {
 
    private ServerSocket sSocket = null;
+   // public InetAddress localhost = null;
    public static final int SERVER_PORT = 23001;
    public int clientsConnected = 0;
    public int gamesConnected = 0;
@@ -19,6 +20,7 @@ public class ServerGUI extends JFrame {
    public JLabel jLogLabel = new JLabel("Log:");
    public JTextArea jLogArea = new JTextArea(10, 35);
    public JLabel clientsConnected_label = new JLabel("Clients Connected: 0");
+   public JLabel ipLabel = new JLabel("");
    
    public JButton start = new JButton("Start Server");
    public JButton stop = new JButton("Stop Server");
@@ -36,13 +38,26 @@ public class ServerGUI extends JFrame {
       
       JPanel central = new JPanel();
       JPanel northern = new JPanel();
+      JPanel southern = new JPanel();
       central.add(jLogLabel);
       central.add(new JScrollPane(jLogArea));
+      southern.add(clientsConnected_label);
+      
+       // localhost = new Socket();
+//         try {
+//            String x = sSocket.getInetAddress().toString();
+//         } catch (IOException e2){}
+//         
+//         }
+// //        ipLabel.setText(localhost.getHostAddress());
+// 
+//        ipLabel.setText(x);
+//        southern.add(ipLabel);
       //northern.add(start);
       //northern.add(stop);
       this.add(northern, BorderLayout.NORTH);
       this.add(central, BorderLayout.CENTER);
-      this.add(clientsConnected_label, BorderLayout.SOUTH);
+      this.add(southern, BorderLayout.SOUTH);
       
       
       this.setVisible(true); //last note

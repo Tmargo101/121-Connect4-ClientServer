@@ -21,7 +21,8 @@ public class GameLogic {
    
    private static int buttonPushed = 0;
    private static String currentColor = "";
-   private static int slotBeingSet, didSomeoneWin;
+   private static int slotBeingSet;
+   private int didSomeoneWin;
 
    /**
       Default constructor
@@ -78,12 +79,13 @@ public class GameLogic {
          
          //Cleanup (Set turnCount and CurrentPlayer), and matching GUI Elements
          GameInstance.setPlayer(inNextPlayer);
-         int whosTurn = GameInstance.getPlayer() + 1;
-         if (GameInstance.getPlayer() == 0) {
+         //int whosTurn = GameInstance.getPlayer() + 1;
+         /*if (GameInstance.getPlayer() == 0) {
             currentColor = "Red";
          } else if (GameInstance.getPlayer() == 1) {
             currentColor = "Yellow";
-         }
+         }*/
+         
          GameInstance.setTurn(GameInstance.getTurn() + 1);
          checkStalemate();
          
@@ -97,7 +99,7 @@ public class GameLogic {
    
    //Resets win condition variable
    
-   public static void resetWinVariable() {
+   public void resetWinVariable() {
       didSomeoneWin = 0;
    }
    
@@ -142,7 +144,7 @@ public class GameLogic {
                      if(GameInstance.getSlot(x,y+2) == p) {
                         if(GameInstance.getSlot(x,y+3) == p) {
                            System.out.printf("Vertical Win which starts at %d, %d",x,y);
-                           didSomeoneWin = 1;
+                           didSomeoneWin = p;
                         }
                      }
                   }
@@ -164,8 +166,8 @@ public class GameLogic {
                      if(GameInstance.getSlot(x+2,y) == p) {
                         if(GameInstance.getSlot(x+3,y) == p) {
                            System.out.printf("Horizontal Win which starts at %d, %d",x,y);
-                           didSomeoneWin = 1;
-                         //  System.exit(0);
+                           didSomeoneWin = p;
+                         
                         }
                      }
                   }
@@ -185,7 +187,7 @@ public class GameLogic {
                      if(GameInstance.getSlot(x+2,y+2) == p) {
                         if(GameInstance.getSlot(x+3,y+3) == p) {
                            System.out.println("Right Diagonal Win At");
-                           didSomeoneWin = 1;
+                           didSomeoneWin = p;
                         }
                      }
                   }
@@ -205,7 +207,7 @@ public class GameLogic {
                      if(GameInstance.getSlot(x-2,y+2) == p) {
                         if(GameInstance.getSlot(x-3,y+3) == p) {
                            System.out.println("Left Diagonal Win At");
-                           didSomeoneWin = 1;
+                           didSomeoneWin = p;
                         }
                      }
                   }

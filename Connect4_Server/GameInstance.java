@@ -26,7 +26,7 @@ public class GameInstance extends Thread {
    private Scanner clientReaderOne, clientReaderTwo;
    private static String networkResponse;
 
-   GameLogic logic = new GameLogic();
+   public static GameLogic logic = new GameLogic();
 
    //Create ArrayList for this game
    public static ArrayList <BoardColumn_Server> columns = new ArrayList<>();
@@ -125,18 +125,7 @@ public class GameInstance extends Thread {
      sendNetworkData();
    }  
    
-   public static void resetBoard() {
-      //currentTurn = 1;
-      
-      for(int x = 0; x < 7; x++) {
-         for(int y = 0; y < 6; y++) {
-            setSlot(x,y,0);
-         }
-      }
-      GameLogic.resetWinVariable();
-      sendStartingData();
-      
-   }
+   
    /**We need to identify who's player 0 (red), and who's player 1 (yellow).
    When the new GameInstance is constructed, this sends a string which will tell the game who's starting
    and who's not.
@@ -165,6 +154,23 @@ public class GameInstance extends Thread {
       clientWriterTwo.flush();
       
 
+   }
+   
+   public static void resetBoard() {
+      
+      
+      for(int x = 0; x < 7; x++) {
+         for(int y = 0; y < 6; y++) {
+            setSlot(x,y,0);
+         }
+      }
+      logic.resetWinVariable();
+      sendStartingData();
+      
+      currentTurn = 0; //to prevent the board from catching a Stalemate when it's not
+      currentPlayer = 0; //Allow red to go again after win
+      
+      
    }
    
    
