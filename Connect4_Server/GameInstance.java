@@ -229,20 +229,7 @@ public class GameInstance extends Thread {
                System.out.println("END - Game " + gameID + " Data Information");
                System.out.println("*************************************");
             }
-               /*if (currentPlayer == 0) {
-                  //String clientOneData = clientReaderOne.nextLine();
-                  System.out.println("Player 1 sent: " + clientOneData);
-                  //currentColumn = Integer.parseInt(clientOneData);
-                  //logic.playerTurn(currentColumn);
-                  System.out.println("Now it's " + currentPlayer + "'s Turn");
-                  
-               } else if (currentPlayer == 1) {
-                  //String clientTwoData = clientReaderTwo.nextLine();
-                  System.out.println("Player 2 sent: " + clientTwoData);
-                  //currentColumn = Integer.parseInt(clientTwoData);
-                  //logic.playerTurn(currentColumn);
-                  System.out.println("Now it's " + currentPlayer + "'s Turn");
-               }*/
+
          }
       }
    } //END OF SERVERLISTENER CLASS

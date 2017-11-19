@@ -59,41 +59,32 @@ public class GameLogic {
 
          for (int i = 0; i <  GameInstance.getNumSlots(buttonPushed) + 1; i++) {
             if (GameInstance.getSlot(buttonPushed, i) == 0) {
-               //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
-               //Troubleshoot
-               GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
-               slotBeingSet = i;
-               GameInstance.setSlot(buttonPushed, i, stateToSet);
-               //System.out.println("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
-               //Troubleshoot
-               GameInstance.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
-               break;
+                  //Troubleshoot
+                  GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+                  slotBeingSet = i;
+                  GameInstance.setSlot(buttonPushed, i, stateToSet);
+                  //Troubleshoot
+                  GameInstance.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
+                  break;
             } else {
-                //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
-                //Troubleshoot
-                GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+                   //Troubleshoot
+                   GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
             }
          }
          
-         checkWinConditions();
+            checkWinConditions();
          
-         //Cleanup (Set turnCount and CurrentPlayer), and matching GUI Elements
-         GameInstance.setPlayer(inNextPlayer);
-         //int whosTurn = GameInstance.getPlayer() + 1;
-         /*if (GameInstance.getPlayer() == 0) {
-            currentColor = "Red";
-         } else if (GameInstance.getPlayer() == 1) {
-            currentColor = "Yellow";
-         }*/
+            //Cleanup (Set turnCount and CurrentPlayer), and matching GUI Elements
+            GameInstance.setPlayer(inNextPlayer);
+            GameInstance.setTurn(GameInstance.getTurn() + 1);
+            
+            checkStalemate();
+            
+            GameInstance.formatNetworkResponse(buttonPushed, slotBeingSet, stateToSet, inNextPlayer, didSomeoneWin);
          
-         GameInstance.setTurn(GameInstance.getTurn() + 1);
-         checkStalemate();
-         
-         GameInstance.formatNetworkResponse(buttonPushed, slotBeingSet, stateToSet, inNextPlayer, didSomeoneWin);
-         
-         if (didSomeoneWin > 0) {
-            GameInstance.resetBoard();
-         }
+            if (didSomeoneWin > 0) {
+               GameInstance.resetBoard();
+            }
 
    }
    
@@ -109,11 +100,6 @@ public class GameLogic {
    */
    public void checkStalemate() {
       if (GameInstance.getTurn() > 41) {
-//          String stalemateText = String.format("Nobody Wins");
-//          JOptionPane.showMessageDialog(null, stalemateText);
-            /**
-            FIGURE OUT: How to do this over the network (Necessary?)
-            */
             
             
          GameInstance.resetBoard();
