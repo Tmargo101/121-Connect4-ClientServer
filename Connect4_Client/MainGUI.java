@@ -132,7 +132,8 @@ public class MainGUI extends JFrame {
 //       }
 //       catch(UnknownHostException uhe){System.out.println("The host might not exist: " + uhe);}
 //       catch(IOException ioe){System.out.println("IOException: " + ioe);}
-//       
+//
+      add(new ChatClient(username,ip), BorderLayout.EAST);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setVisible(true);
    } 
@@ -338,18 +339,10 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
-         //Re-enables all buttons (for if the column was full)
-         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).checkColumnFull();
-         }
       } else if (Integer.parseInt(winInt) == 5) {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
-         //Re-enables all buttons (for if the column was full)
-         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).checkColumnFull();
-         }
          
       }
    }
