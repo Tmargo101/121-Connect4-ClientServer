@@ -142,6 +142,7 @@ public class ServerGUI extends JFrame {
                   gamesConnected++;
                   
                   new GameInstance(threads.get(clientsConnected - 2).getSocket(), threads.get(clientsConnected - 1).getSocket(), gamesConnected);
+                  //Make gameinstance a thread
                }
             }
          }

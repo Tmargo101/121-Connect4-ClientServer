@@ -126,6 +126,8 @@ public class GameInstance extends Thread {
    }  
    
    public static void resetBoard() {
+      //currentTurn = 1;
+      
       for(int x = 0; x < 7; x++) {
          for(int y = 0; y < 6; y++) {
             setSlot(x,y,0);
@@ -133,6 +135,7 @@ public class GameInstance extends Thread {
       }
       GameLogic.resetWinVariable();
       sendStartingData();
+      
    }
    /**We need to identify who's player 0 (red), and who's player 1 (yellow).
    When the new GameInstance is constructed, this sends a string which will tell the game who's starting
@@ -160,6 +163,7 @@ public class GameInstance extends Thread {
       
       clientWriterOne.flush();
       clientWriterTwo.flush();
+      
 
    }
    
@@ -182,56 +186,57 @@ public class GameInstance extends Thread {
          
          //Change
          while(true) {
-         if (currentPlayer == 0) {
-            String clientOneData = clientReaderOne.nextLine();
-            System.out.println("*************************************");
-            System.out.println("START - Game " + gameID + " Data Information");
-            System.out.println("*************************************");
-            System.out.println("Player 1 sent: " + clientOneData);
-            currentColumn = Integer.parseInt(clientOneData);
-            logic.playerTurn(currentColumn);
-            System.out.println("Now it's " + currentPlayer + "'s Turn");
-            System.out.println("Client One isClosed: " + socketOne.isClosed());
-            System.out.println("Client One isConnected: " + socketOne.isConnected());
-            System.out.println("Client Two isClosed: " + socketTwo.isClosed());
-            System.out.println("Client Two isConnected: " + socketTwo.isConnected());
-            System.out.println("*************************************");
-            System.out.println("END - Game " + gameID + " Data Information");
-            System.out.println("*************************************");
-            
-            
-         } else if (currentPlayer == 1) {
-            String clientTwoData = clientReaderTwo.nextLine();
-            System.out.println("*************************************");
-            System.out.println("START - Game " + gameID + " Data Information");
-            System.out.println("*************************************");
-            System.out.println("Player 2 sent: " + clientTwoData);
-            currentColumn = Integer.parseInt(clientTwoData);
-            logic.playerTurn(currentColumn);
-            System.out.println("Now it's " + currentPlayer + "'s Turn");
-            System.out.println("Now it's " + currentPlayer + "'s Turn");
-            System.out.println("Client One isClosed: " + socketOne.isClosed());
-            System.out.println("Client One isConnected: " + socketOne.isConnected());
-            System.out.println("Client Two isClosed: " + socketTwo.isClosed());
-            System.out.println("Client Two isConnected: " + socketTwo.isConnected());
-            System.out.println("*************************************");
-            System.out.println("END - Game " + gameID + " Data Information");
-            System.out.println("*************************************");
-         }
             if (currentPlayer == 0) {
                String clientOneData = clientReaderOne.nextLine();
+               System.out.println("*************************************");
+               System.out.println("START - Game " + gameID + " Data Information");
+               System.out.println("*************************************");
                System.out.println("Player 1 sent: " + clientOneData);
                currentColumn = Integer.parseInt(clientOneData);
                logic.playerTurn(currentColumn);
                System.out.println("Now it's " + currentPlayer + "'s Turn");
+               System.out.println("Client One isClosed: " + socketOne.isClosed());
+               System.out.println("Client One isConnected: " + socketOne.isConnected());
+               System.out.println("Client Two isClosed: " + socketTwo.isClosed());
+               System.out.println("Client Two isConnected: " + socketTwo.isConnected());
+               System.out.println("Current Turn Number: " + currentTurn);
+               System.out.println("*************************************");
+               System.out.println("END - Game " + gameID + " Data Information");
+               System.out.println("*************************************");
+               
                
             } else if (currentPlayer == 1) {
                String clientTwoData = clientReaderTwo.nextLine();
+               System.out.println("*************************************");
+               System.out.println("START - Game " + gameID + " Data Information");
+               System.out.println("*************************************");
                System.out.println("Player 2 sent: " + clientTwoData);
                currentColumn = Integer.parseInt(clientTwoData);
                logic.playerTurn(currentColumn);
                System.out.println("Now it's " + currentPlayer + "'s Turn");
+               System.out.println("Client One isClosed: " + socketOne.isClosed());
+               System.out.println("Client One isConnected: " + socketOne.isConnected());
+               System.out.println("Client Two isClosed: " + socketTwo.isClosed());
+               System.out.println("Client Two isConnected: " + socketTwo.isConnected());
+               System.out.println("Current Turn Number: " + currentTurn);
+               System.out.println("*************************************");
+               System.out.println("END - Game " + gameID + " Data Information");
+               System.out.println("*************************************");
             }
+               /*if (currentPlayer == 0) {
+                  //String clientOneData = clientReaderOne.nextLine();
+                  System.out.println("Player 1 sent: " + clientOneData);
+                  //currentColumn = Integer.parseInt(clientOneData);
+                  //logic.playerTurn(currentColumn);
+                  System.out.println("Now it's " + currentPlayer + "'s Turn");
+                  
+               } else if (currentPlayer == 1) {
+                  //String clientTwoData = clientReaderTwo.nextLine();
+                  System.out.println("Player 2 sent: " + clientTwoData);
+                  //currentColumn = Integer.parseInt(clientTwoData);
+                  //logic.playerTurn(currentColumn);
+                  System.out.println("Now it's " + currentPlayer + "'s Turn");
+               }*/
          }
       }
    } //END OF SERVERLISTENER CLASS

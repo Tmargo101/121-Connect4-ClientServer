@@ -52,23 +52,23 @@ public class GameLogic {
      
    */
    public void playerLogic(int inNextPlayer) {
-            System.out.println("Is Player" + GameInstance.getPlayer() + "'s turn");
+            //System.out.println("Is Player" + GameInstance.getPlayer() + "'s turn");
             GameInstance.printDataServer("GameLogic: Is Player" + GameInstance.getPlayer() + "'s turn");
             int stateToSet =  GameInstance.getPlayer() + 1;
 
          for (int i = 0; i <  GameInstance.getNumSlots(buttonPushed) + 1; i++) {
             if (GameInstance.getSlot(buttonPushed, i) == 0) {
-               System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+               //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
                //Troubleshoot
                GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
                slotBeingSet = i;
                GameInstance.setSlot(buttonPushed, i, stateToSet);
-               System.out.println("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
+               //System.out.println("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
                //Troubleshoot
                GameInstance.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
                break;
             } else {
-                System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+                //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
                 //Troubleshoot
                 GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
             }
