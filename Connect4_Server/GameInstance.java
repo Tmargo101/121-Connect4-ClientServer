@@ -143,7 +143,7 @@ public class GameInstance extends Thread {
       clientWriterOne.println("0,0,0,0,4");
       System.out.println("Sending Starting Data (Client One): 0,0,0,0,4");
       clientWriterTwo.println("0,0,0,0,5");
-      System.out.println("Sending Starting Data (Client Two): 0,0,0,0,4");
+      System.out.println("Sending Starting Data (Client Two): 0,0,0,0,5");
       
       clientWriterOne.flush();
       clientWriterTwo.flush();
@@ -236,6 +236,11 @@ public class GameInstance extends Thread {
       }
    } //END OF SERVERLISTENER CLASS
 
+   public static void printDataServer(String message) {
+      //Method is strictly used by GameLogic to print
+      //data to the server for troubleshooting purposes
+      System.out.println(message);
+   }
 
    
 }//End GameInstance
