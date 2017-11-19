@@ -1,3 +1,5 @@
+package Connect4_Client;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -7,7 +9,7 @@ import java.io.*;
 import java.net.*;
 
 /**
-@author: Josh Schrader, Tom Margosian
+@author: Josh Schrader, Tom Margosian, Todd Bednarczyk
 
 @description: This class is the Main GUI for Connect4.
 The class sets up all needed components for the game to look authentic.
@@ -17,10 +19,11 @@ cannot hold them.
 
 public class MainGUI extends JFrame {
 //Original 1260x900
-   public static final int GUI_WIDTH =  1260;
+   public static final int GUI_WIDTH =  1600;
    public static final int GUI_HEIGHT = 900;
    public static final int HEADER_WIDTH = 50;
    public static final int HEADER_HEIGHT = 50;
+   public static final int COLUMN_WIDTH = 1260;
    
    public static final int SERVER_PORT = 23001; // the port that the server is going to be listening on
    
@@ -118,19 +121,8 @@ public class MainGUI extends JFrame {
       socket = inSocket;
       ServerListener sl = new ServerListener();
       
-     //  try{
-//          username = JOptionPane.showInputDialog(this, "Username: ");
-//          ip = JOptionPane.showInputDialog(this, "IP Address of Server: ");
-//          
-//          validateSetupData(username, ip);
-//          
-//          socket = new Socket(ip, SERVER_PORT);
-//          System.out.println("You've connected to the server");
-//          ServerListener sl = new ServerListener();
-//       }
-//       catch(UnknownHostException uhe){System.out.println("The host might not exist: " + uhe);}
-//       catch(IOException ioe){System.out.println("IOException: " + ioe);}
-//       
+
+      add(new ChatClient(username,ip), BorderLayout.EAST);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setVisible(true);
    } 
@@ -234,9 +226,9 @@ public class MainGUI extends JFrame {
       String currentColor = "";
       
       if(clientIsPlayer == 0) {
-         updatePlayerTurnGUI("2");
+         updatePlayerTurnGUI("0");
       } else if (clientIsPlayer == 1) {
-         updatePlayerTurnGUI("2");
+         updatePlayerTurnGUI("0");
       }
       
 //       if (MainGUI.getPlayer() == 0) {
@@ -312,7 +304,8 @@ public class MainGUI extends JFrame {
             }
 
       }//end else if playerTurn == 1
-      
+      currentTurn++;
+      turnNumber.setText("Current Turn: " + currentTurn);
    }//End UpdatePlayerTurnGUI
    
    
@@ -336,10 +329,18 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         //Re-enables all buttons (for if the column was full)
+         for (int i = 0; i < columns.size(); i++) {
+            columns.get(i).checkColumnFull();
+         }
       } else if (Integer.parseInt(winInt) == 5) {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         //Re-enables all buttons (for if the column was full)
+         for (int i = 0; i < columns.size(); i++) {
+            columns.get(i).checkColumnFull();
+         }
          
       }
    }
@@ -399,7 +400,8 @@ public class MainGUI extends JFrame {
             
             
             String[] parsedData = serverData.split(",");
-            System.out.println("Recieved: " + serverData);
+            System.out.println("Recieved: " + serverData + "\n");
+            
             
             // We updated the board based on data recieved from server through the setSlot method
             setSlot(Integer.parseInt(parsedData[0]),Integer.parseInt(parsedData[1]),Integer.parseInt(parsedData[2]));

@@ -1,3 +1,5 @@
+package Connect4_Server;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import java.net.*;
@@ -59,8 +61,18 @@ public class ServerGUI extends JFrame {
       this.add(central, BorderLayout.CENTER);
       this.add(southern, BorderLayout.SOUTH);
       
-      
+
       this.setVisible(true); //last note
+
+
+       Thread chatThread = new Thread() {
+           @Override
+           public void run(){
+               ChatServer cServer = new ChatServer();
+           }
+       };
+
+       chatThread.start();
       
          
          // SERVER INFORMATION
@@ -71,7 +83,6 @@ public class ServerGUI extends JFrame {
       catch(IOException e1) {
          System.out.println("Uh oh! An exception");
       }
-      
       
    while(true) {
          Socket cSocket = null; //Client Socket

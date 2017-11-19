@@ -1,3 +1,6 @@
+package Connect4_Client;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +21,7 @@ public class BoardColumn extends JPanel {
 
       Actions actions = new Actions();
       
-      public static final int columnWidth = (MainGUI.GUI_WIDTH / 7);
+      public static final int columnWidth = (MainGUI.COLUMN_WIDTH / 7);
       public static final int columnHeight = (MainGUI.GUI_HEIGHT - MainGUI.HEADER_HEIGHT);
      
        
@@ -65,6 +68,8 @@ public class BoardColumn extends JPanel {
          if(slots[5].getState() == 1 || slots[5].getState() == 2) {
             topBtn.setEnabled(false);
             columnFull = true;
+         } else {
+            columnFull = false;
          }
       }
       
