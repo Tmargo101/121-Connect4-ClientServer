@@ -17,6 +17,7 @@ public class GameInstance extends Thread {
    public static int currentTurn = 0;
    public static int currentPlayer = 0;
    public static int currentColumn;
+   public static int gameID = -1;
    
    private static String sendWinConditions;
       
@@ -41,6 +42,7 @@ public class GameInstance extends Thread {
       
       socketOne = inSocketOne;
       socketTwo = inSocketTwo;
+      gameID = inGameId;
       
       System.out.println("Instance: " + socketOne + ", Is connected = " + socketOne.isConnected());
       System.out.println("Instance: " + socketTwo + ", Is connected = " + socketTwo.isConnected());
@@ -139,7 +141,9 @@ public class GameInstance extends Thread {
    public static void sendStartingData(){
             
       clientWriterOne.println("0,0,0,0,4");
+      System.out.println("Sending Starting Data (Client One): 0,0,0,0,4");
       clientWriterTwo.println("0,0,0,0,5");
+      System.out.println("Sending Starting Data (Client Two): 0,0,0,0,4");
       
       clientWriterOne.flush();
       clientWriterTwo.flush();
@@ -151,6 +155,7 @@ public class GameInstance extends Thread {
   public static void sendNetworkData(){
       
       clientWriterOne.println(networkResponse);
+      System.out.println("Network Response Sent (Both Clients): " + networkResponse);
       clientWriterTwo.println(networkResponse);
       
       clientWriterOne.flush();
@@ -179,6 +184,9 @@ public class GameInstance extends Thread {
          while(true) {
          if (currentPlayer == 0) {
             String clientOneData = clientReaderOne.nextLine();
+            System.out.println("*************************************");
+            System.out.println("START - Game " + gameID + " Data Information");
+            System.out.println("*************************************");
             System.out.println("Player 1 sent: " + clientOneData);
             currentColumn = Integer.parseInt(clientOneData);
             logic.playerTurn(currentColumn);
@@ -187,9 +195,16 @@ public class GameInstance extends Thread {
             System.out.println("Client One isConnected: " + socketOne.isConnected());
             System.out.println("Client Two isClosed: " + socketTwo.isClosed());
             System.out.println("Client Two isConnected: " + socketTwo.isConnected());
+            System.out.println("*************************************");
+            System.out.println("END - Game " + gameID + " Data Information");
+            System.out.println("*************************************");
+            
             
          } else if (currentPlayer == 1) {
             String clientTwoData = clientReaderTwo.nextLine();
+            System.out.println("*************************************");
+            System.out.println("START - Game " + gameID + " Data Information");
+            System.out.println("*************************************");
             System.out.println("Player 2 sent: " + clientTwoData);
             currentColumn = Integer.parseInt(clientTwoData);
             logic.playerTurn(currentColumn);
@@ -199,6 +214,9 @@ public class GameInstance extends Thread {
             System.out.println("Client One isConnected: " + socketOne.isConnected());
             System.out.println("Client Two isClosed: " + socketTwo.isClosed());
             System.out.println("Client Two isConnected: " + socketTwo.isConnected());
+            System.out.println("*************************************");
+            System.out.println("END - Game " + gameID + " Data Information");
+            System.out.println("*************************************");
          }
             if (currentPlayer == 0) {
                String clientOneData = clientReaderOne.nextLine();
