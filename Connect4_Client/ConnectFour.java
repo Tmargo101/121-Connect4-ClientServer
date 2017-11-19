@@ -98,7 +98,7 @@ public class ConnectFour extends JFrame {
       }
       try {
          if (socket.isConnected() == true) {
-            new MainGUI(socket, name);
+            new MainGUI(socket, name, ip);
             setVisible(false);
          }
       } catch (NullPointerException npe) {

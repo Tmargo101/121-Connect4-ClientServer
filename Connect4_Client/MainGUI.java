@@ -58,7 +58,7 @@ public class MainGUI extends JFrame {
    /**
       Takes care of the main setup of the gui.
    */
-   public MainGUI(Socket inSocket, String inUsername){
+   public MainGUI(Socket inSocket, String inUsername, String inIpAddress){
       
       setSize(GUI_WIDTH, GUI_HEIGHT);
       setLocationRelativeTo(null);
@@ -117,6 +117,9 @@ public class MainGUI extends JFrame {
       for (int i = 0; i < columns.size(); i++) {
          columns.get(i).disableBtn();
       }
+      
+      username = inUsername;
+      ip = inIpAddress;
       
       socket = inSocket;
       ServerListener sl = new ServerListener();
