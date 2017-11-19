@@ -336,10 +336,18 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         //Re-enables all buttons (for if the column was full)
+         for (int i = 0; i < columns.size(); i++) {
+            columns.get(i).checkColumnFull();
+         }
       } else if (Integer.parseInt(winInt) == 5) {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         //Re-enables all buttons (for if the column was full)
+         for (int i = 0; i < columns.size(); i++) {
+            columns.get(i).checkColumnFull();
+         }
          
       }
    }
