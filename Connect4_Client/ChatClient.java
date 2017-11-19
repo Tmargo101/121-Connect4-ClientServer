@@ -30,18 +30,21 @@ public class ChatClient extends JPanel {
 
 
     public ChatClient(String username, String ipaddress){
-        super(new GridLayout(2,1));
+        super(new BorderLayout());
         
         Panel msgSendPnl = new Panel(new GridLayout(1,2));
         
-        msgSendPnl.add(message,sendMsg);
+        msgSendPnl.add(message);
+        msgSendPnl.add(sendMsg);
         
         DefaultCaret caret = (DefaultCaret)chatArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
+        message.setColumns(15);
+        chatArea.setEditable(false);
         
-        add(jsp);
-        add(msgSendPnl);
+        add(jsp, BorderLayout.CENTER);
+        add(msgSendPnl, BorderLayout.SOUTH);
         
 
         try {

@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.*;
 
 /**
-@author: Josh Schrader, Tom Margosian
+@author: Josh Schrader, Tom Margosian, Todd Bednarczyk
 
 @description: This class is the Main GUI for Connect4.
 The class sets up all needed components for the game to look authentic.
@@ -19,10 +19,11 @@ cannot hold them.
 
 public class MainGUI extends JFrame {
 //Original 1260x900
-   public static final int GUI_WIDTH =  1260;
+   public static final int GUI_WIDTH =  1600;
    public static final int GUI_HEIGHT = 900;
    public static final int HEADER_WIDTH = 50;
    public static final int HEADER_HEIGHT = 50;
+   public static final int COLUMN_WIDTH = 1260;
    
    public static final int SERVER_PORT = 23001; // the port that the server is going to be listening on
    
@@ -63,7 +64,7 @@ public class MainGUI extends JFrame {
       setLocationRelativeTo(null);
       setTitle("Connect Four");
       setLayout(new BorderLayout());
-      setResizable(false);
+//      setResizable(false);
       
       
       // menu components
