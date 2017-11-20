@@ -15,21 +15,28 @@ it checks which player's turn it is and "drops" a piece of that player's color
 into that column.
 
 GameLogic cannot store variables across the game, as it is a part of each BoardColumn.
-Therefore, it backs up and retrives all global variables to GameInstance.
+Therefore, it backs up and retrives all global variables to gameIObject.
 
 */
 
 public class GameLogic {
    
-   private static int buttonPushed = 0;
-   private static String currentColor = "";
-   private static int slotBeingSet;
+   private int buttonPushed = 0;
+   private String currentColor = "";
+   private int slotBeingSet;
    private int didSomeoneWin;
+   private GameInstance gameIObject = null;
 
    /**
       Default constructor
    */
-   public GameLogic() {}
+   public GameLogic(GameInstance object1) {
+   
+      gameIObject = object1;
+      gameIObject.createLogic(this);
+     
+   
+      }
    
    /**
       A check that determines further action based on whose turn it was
@@ -39,9 +46,9 @@ public class GameLogic {
    public void playerTurn(int inButtonPushed) {
       buttonPushed = inButtonPushed;
       
-      if(GameInstance.getPlayer() == 0) {
+      if(gameIObject.getPlayer() == 0) {
          playerLogic(1);                  
-    } else if (GameInstance.getPlayer() == 1) {
+    } else if (gameIObject.getPlayer() == 1) {
          playerLogic(0);
     }
    }//End playerTurn
@@ -50,51 +57,51 @@ public class GameLogic {
    /**
       This method uses FOR loops to check the column of the button pushed to determine
       where to place a piece, and what color it should be.  It also calls WinConditions for it's check,
-      and ends by setting the Player, turn, and associated values in GameInstance. 
+      and ends by setting the Player, turn, and associated values in gameIObject. 
       @param inNextPlayer value which takes the value to set playerTurn to after the logic run is complete.
      
    */
    public void playerLogic(int inNextPlayer) {
-            //System.out.println("Is Player" + GameInstance.getPlayer() + "'s turn");
-            GameInstance.printDataServer("GameLogic: Is Player" + GameInstance.getPlayer() + "'s turn");
-            int stateToSet =  GameInstance.getPlayer() + 1;
+            //System.out.println("Is Player" + gameIObject.getPlayer() + "'s turn");
+            gameIObject.printDataServer("GameLogic: Is Player" + gameIObject.getPlayer() + "'s turn");
+            int stateToSet =  gameIObject.getPlayer() + 1;
 
-         for (int i = 0; i <  GameInstance.getNumSlots(buttonPushed) + 1; i++) {
-            if (GameInstance.getSlot(buttonPushed, i) == 0) {
-               //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+         for (int i = 0; i <  gameIObject.getNumSlots(buttonPushed) + 1; i++) {
+            if (gameIObject.getSlot(buttonPushed, i) == 0) {
+               //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
                //Troubleshoot
-               GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+               gameIObject.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
                slotBeingSet = i;
-               GameInstance.setSlot(buttonPushed, i, stateToSet);
+               gameIObject.setSlot(buttonPushed, i, stateToSet);
                //System.out.println("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
                //Troubleshoot
-               GameInstance.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
+               gameIObject.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
                break;
             } else {
-                //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+                //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
                 //Troubleshoot
-                GameInstance.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + GameInstance.getSlot(buttonPushed, i));
+                gameIObject.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
             }
          }
          
          checkWinConditions();
          
          //Cleanup (Set turnCount and CurrentPlayer), and matching GUI Elements
-         GameInstance.setPlayer(inNextPlayer);
-         //int whosTurn = GameInstance.getPlayer() + 1;
-         /*if (GameInstance.getPlayer() == 0) {
+         gameIObject.setPlayer(inNextPlayer);
+         //int whosTurn = gameIObject.getPlayer() + 1;
+         /*if (gameIObject.getPlayer() == 0) {
             currentColor = "Red";
-         } else if (GameInstance.getPlayer() == 1) {
+         } else if (gameIObject.getPlayer() == 1) {
             currentColor = "Yellow";
          }*/
          
-         GameInstance.setTurn(GameInstance.getTurn() + 1);
+         gameIObject.setTurn(gameIObject.getTurn() + 1);
          checkStalemate();
          
-         GameInstance.formatNetworkResponse(buttonPushed, slotBeingSet, stateToSet, inNextPlayer, didSomeoneWin);
+         gameIObject.formatNetworkResponse(buttonPushed, slotBeingSet, stateToSet, inNextPlayer, didSomeoneWin);
          
          if (didSomeoneWin > 0) {
-            GameInstance.resetBoard();
+            gameIObject.resetBoard();
          }
 
    }
@@ -110,7 +117,7 @@ public class GameLogic {
       pre-designated value to see if there is a stalemate that occurred.
    */
    public void checkStalemate() {
-      if (GameInstance.getTurn() > 41) {
+      if (gameIObject.getTurn() > 41) {
 //          String stalemateText = String.format("Nobody Wins");
 //          JOptionPane.showMessageDialog(null, stalemateText);
             /**
@@ -118,7 +125,7 @@ public class GameLogic {
             */
             
             
-         GameInstance.resetBoard();
+         gameIObject.resetBoard();
       }
    }
         
@@ -141,10 +148,10 @@ public class GameLogic {
          //Checks slots 0,1,2 only (if none of these work you can't win + arrayIndexOutOfBounds)
          for(y = 0; y < 3; y++) {
             for(p = 1; p < 3; p++) {
-               if (GameInstance.getSlot(x,y) == p) {
-                  if (GameInstance.getSlot(x,y+1) == p) {
-                     if(GameInstance.getSlot(x,y+2) == p) {
-                        if(GameInstance.getSlot(x,y+3) == p) {
+               if (gameIObject.getSlot(x,y) == p) {
+                  if (gameIObject.getSlot(x,y+1) == p) {
+                     if(gameIObject.getSlot(x,y+2) == p) {
+                        if(gameIObject.getSlot(x,y+3) == p) {
                            System.out.printf("Vertical Win which starts at %d, %d",x,y);
                            didSomeoneWin = p;
                         }
@@ -163,10 +170,10 @@ public class GameLogic {
       for(x = 0; x < 4; x++) {
          for(y = 0; y < 5; y++) {
             for(p = 1; p < 3; p++) {
-               if (GameInstance.getSlot(x,y) == p) {
-                  if (GameInstance.getSlot(x+1,y) == p) {
-                     if(GameInstance.getSlot(x+2,y) == p) {
-                        if(GameInstance.getSlot(x+3,y) == p) {
+               if (gameIObject.getSlot(x,y) == p) {
+                  if (gameIObject.getSlot(x+1,y) == p) {
+                     if(gameIObject.getSlot(x+2,y) == p) {
+                        if(gameIObject.getSlot(x+3,y) == p) {
                            System.out.printf("Horizontal Win which starts at %d, %d",x,y);
                            didSomeoneWin = p;
                          
@@ -184,10 +191,10 @@ public class GameLogic {
       for(x = 0; x < 4; x++) {
          for(y = 0; y < 3; y++) {
             for(p = 1; p < 3; p++) {
-               if (GameInstance.getSlot(x,y) == p) {
-                  if (GameInstance.getSlot(x+1,y+1) == p) {
-                     if(GameInstance.getSlot(x+2,y+2) == p) {
-                        if(GameInstance.getSlot(x+3,y+3) == p) {
+               if (gameIObject.getSlot(x,y) == p) {
+                  if (gameIObject.getSlot(x+1,y+1) == p) {
+                     if(gameIObject.getSlot(x+2,y+2) == p) {
+                        if(gameIObject.getSlot(x+3,y+3) == p) {
                            System.out.println("Right Diagonal Win At");
                            didSomeoneWin = p;
                         }
@@ -204,10 +211,10 @@ public class GameLogic {
       for(x = 3; x < 7; x++) {
          for(y = 0; y < 3; y++) {
             for(p = 1; p < 3; p++) {
-               if (GameInstance.getSlot(x,y) == p) {
-                  if (GameInstance.getSlot(x-1,y+1) == p) {
-                     if(GameInstance.getSlot(x-2,y+2) == p) {
-                        if(GameInstance.getSlot(x-3,y+3) == p) {
+               if (gameIObject.getSlot(x,y) == p) {
+                  if (gameIObject.getSlot(x-1,y+1) == p) {
+                     if(gameIObject.getSlot(x-2,y+2) == p) {
+                        if(gameIObject.getSlot(x-3,y+3) == p) {
                            System.out.println("Left Diagonal Win At");
                            didSomeoneWin = p;
                         }

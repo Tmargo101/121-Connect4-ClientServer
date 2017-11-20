@@ -19,7 +19,6 @@ The logic for interacting with those slots should be placed within this class.
 public class BoardColumn_Server {
 
       Actions actions = new Actions();
-      GameLogic logic = new GameLogic();
             
       private BoardSlot_Server[] slots = new BoardSlot_Server[6];
             
@@ -57,11 +56,12 @@ public class BoardColumn_Server {
          return columnNum;
       }  
       
+      
+      //Don't think this is doing anything anymore...
       class Actions implements ActionListener {
          public void actionPerformed(ActionEvent ae) {
             if(ae.getActionCommand().equals("Press Me!")) {
                System.out.println("\n");
-               logic.playerTurn(columnNum);
                if(slots[5].getState() == 1 || slots[5].getState() == 2) {
                   //This was what set the button to disabled; figure out if there's a way to do over network (if necessary)
                }

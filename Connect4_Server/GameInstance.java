@@ -10,28 +10,28 @@ import java.io.*;
 
 
 
-public class GameInstance extends Thread {
+public class GameInstance {
 
    //Which game is this?
    private int currentGame;
    
    //INIT variables for this game
-   public static int currentTurn = 0;
-   public static int currentPlayer = 0;
-   public static int currentColumn;
-   public static int gameID = -1;
+   public int currentTurn = 0;
+   public int currentPlayer = 0;
+   public int currentColumn;
+   public int gameID = -1;
    
-   private static String sendWinConditions;
+   private String sendWinConditions;
       
-   private static Socket socketOne, socketTwo;
-   private static PrintWriter clientWriterOne, clientWriterTwo;
+   private Socket socketOne, socketTwo;
+   private PrintWriter clientWriterOne, clientWriterTwo;
    private Scanner clientReaderOne, clientReaderTwo;
-   private static String networkResponse;
+   private String networkResponse;
 
-   public static GameLogic logic = new GameLogic();
+   public GameLogic logic = null;
 
    //Create ArrayList for this game
-   public static ArrayList <BoardColumn_Server> columns = new ArrayList<>();
+   public ArrayList <BoardColumn_Server> columns = new ArrayList<>();
 
    /**
    Constructor
@@ -41,6 +41,7 @@ public class GameInstance extends Thread {
 
 
    public GameInstance(Socket inSocketOne, Socket inSocketTwo, int inGameId) {
+      
       
       socketOne = inSocketOne;
       socketTwo = inSocketTwo;
@@ -68,29 +69,35 @@ public class GameInstance extends Thread {
       
    }//End Constructor
    
+   public void createLogic(GameLogic object3) {
+      
+      logic = object3;
+      
+   }
+   
    /**
    Create setters and getters for THIS instance of the game
    */
    
-   public static int getPlayer() {
+   public int getPlayer() {
       return currentPlayer;
    }
    
-   public static void setPlayer(int inCurrentPlayer) {
+   public void setPlayer(int inCurrentPlayer) {
       currentPlayer = inCurrentPlayer;
    }
    
-   public static int getNumSlots(int inColumnNum) {
+   public int getNumSlots(int inColumnNum) {
       //Figure out what this is
       int numSlots = 5;
       return numSlots;
    }
    
-   public static int getTurn() {
+   public int getTurn() {
       return currentTurn;
    }  
    
-   public static void setTurn(int inNewTurn) {
+   public void setTurn(int inNewTurn) {
       currentTurn = inNewTurn;
    }
    
@@ -100,7 +107,7 @@ public class GameInstance extends Thread {
       @param the location of the boardslot in a board column
       @return the state of a specific slot
    */
-   public static int getSlot(int inX, int inY) { 
+   public int getSlot(int inX, int inY) { 
       int slotValue = columns.get(inX).getSlot(inY).getState();
       return slotValue;
    }
@@ -112,11 +119,11 @@ public class GameInstance extends Thread {
       @param inY the location of the boardslot in a board column 
       @param inState integer that determines the state of a slot
    */
-   public static void setSlot(int inX, int inY, int inState) {
+   public void setSlot(int inX, int inY, int inState) {
       columns.get(inX).getSlot(inY).setState(inState);
    } 
    
-   public static void formatNetworkResponse(int inX, int inY, int inState, int inPlayerTurn, int inWinConditions) {
+   public void formatNetworkResponse(int inX, int inY, int inState, int inPlayerTurn, int inWinConditions) {
      String sendX = Integer.toString(inX);
      String sendY = Integer.toString(inY);
      String sendState = Integer.toString(inState);
@@ -132,7 +139,7 @@ public class GameInstance extends Thread {
    When the new GameInstance is constructed, this sends a string which will tell the game who's starting
    and who's not.
    */
-   public static void sendStartingData(){
+   public void sendStartingData(){
             
       clientWriterOne.println("0,0,0,0,4");
       System.out.println("Sending Starting Data (Client One): 0,0,0,0,4");
@@ -146,7 +153,7 @@ public class GameInstance extends Thread {
 
    
    
-  public static void sendNetworkData(){
+  public void sendNetworkData(){
       
       clientWriterOne.println(networkResponse);
       System.out.println("Network Response Sent (Both Clients): " + networkResponse);
@@ -158,7 +165,7 @@ public class GameInstance extends Thread {
 
    }
    
-   public static void resetBoard() {
+   public void resetBoard() {
       
       
       for(int x = 0; x < 7; x++) {

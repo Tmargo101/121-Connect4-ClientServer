@@ -1,4 +1,4 @@
-//SERVER & CHAT MIXED - 6:20 PM (BH)
+//VERSION 1.2 - MULTI THREADING WORKS - Caution, Don't try on a old computer.
 
 package Connect4_Server;
 
@@ -30,6 +30,8 @@ public class ServerGUI extends JFrame {
    public JButton stop = new JButton("Stop Server");
    
    ArrayList<ClientThread> threads = new ArrayList<ClientThread>();
+   ArrayList<GameLogic> gameLogic_threads = new ArrayList<GameLogic>();
+   ArrayList<GameInstance> gameInstance_threads = new ArrayList<GameInstance>();
 
    public ServerGUI() {
       // Window setup
@@ -110,8 +112,7 @@ public class ServerGUI extends JFrame {
          synchronized(threads) {
          
             threads.add(new ClientThread(cSocket));
-   
-            ClientThread ct = new ClientThread(cSocket);
+            
             Thread t = new Thread(threads.get(clientsConnected - 1));
             t.start();
             
@@ -169,8 +170,11 @@ public class ServerGUI extends JFrame {
                   gameStarted = true;
                   gamesConnected++;
                   
-                  new GameInstance(threads.get(clientsConnected - 2).getSocket(), threads.get(clientsConnected - 1).getSocket(), gamesConnected);
-                  //Make gameinstance a thread
+                  
+                  gameInstance_threads.add(new GameInstance(threads.get(clientsConnected - 2).getSocket(), threads.get(clientsConnected - 1).getSocket(), gamesConnected));
+                  gameLogic_threads.add(new GameLogic(gameInstance_threads.get(gamesConnected - 1)));
+                  
+                  
                }
             }
          }
