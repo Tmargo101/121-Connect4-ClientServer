@@ -5,6 +5,8 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -74,6 +76,16 @@ public class ChatClient extends JPanel {
                 sendMsg();
             }
         });
+        
+        message.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent ke) {
+                if(ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    sendMsg();
+                }
+            }
+        });
+
+        //fff
     }
 
 
