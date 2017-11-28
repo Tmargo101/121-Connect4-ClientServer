@@ -22,7 +22,7 @@ public class ChatClient extends JPanel {
     JTextField message = new JTextField();
     
 
-    public static final int CHAT_PORT = 32002;
+    public static final int CHAT_PORT = 23002;
     private Socket socket = null;
     private Scanner chatScanner = null;
     private PrintWriter chatWriter = null;

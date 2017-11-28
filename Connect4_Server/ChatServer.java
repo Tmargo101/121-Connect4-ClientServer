@@ -37,7 +37,7 @@ public class ChatServer {
 
     ArrayList<ClientChat> clients = new ArrayList<>();
     private ServerSocket chatSocket = null;
-    public static final int CHAT_PORT = 32002;
+    public static final int CHAT_PORT = 23002;
 
     /**
      * The Constructor for the Chat Server is what accepts all the new clients. It also creates the server.
