@@ -65,7 +65,7 @@ public class GameInstance {
       sendStartingData();      
 
       
-      ServerListener sl = new ServerListener();
+      ClientListener sl = new ClientListener();
       
    }//End Constructor
    
@@ -183,11 +183,11 @@ public class GameInstance {
    }
    
    
-   class ServerListener implements Runnable {
+   class ClientListener implements Runnable {
       
       Thread thread;
       
-      public ServerListener(){
+      public ClientListener(){
          thread = new Thread(this);
          thread.start();
       }
@@ -254,7 +254,7 @@ public class GameInstance {
                }*/
          }
       }
-   } //END OF SERVERLISTENER CLASS
+   } //END OF CLIENTLISTENER CLASS
 
    public static void printDataServer(String message) {
       //Method is strictly used by GameLogic to print
