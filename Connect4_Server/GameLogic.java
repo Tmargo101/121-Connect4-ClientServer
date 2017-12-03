@@ -68,18 +68,15 @@ public class GameLogic {
 
          for (int i = 0; i <  gameIObject.getNumSlots(buttonPushed) + 1; i++) {
             if (gameIObject.getSlot(buttonPushed, i) == 0) {
-               //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
-               //Troubleshoot
+            
                gameIObject.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
                slotBeingSet = i;
                gameIObject.setSlot(buttonPushed, i, stateToSet);
-               //System.out.println("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
-               //Troubleshoot
                gameIObject.printDataServer("GameLogic: Set column " + buttonPushed + ", slot " + i + " to state " + stateToSet);
+               
                break;
+               
             } else {
-                //System.out.println("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
-                //Troubleshoot
                 gameIObject.printDataServer("GameLogic: Checking Column " + buttonPushed + ", slot " + i + ", got state " + gameIObject.getSlot(buttonPushed, i));
             }
          }
@@ -88,12 +85,6 @@ public class GameLogic {
          
          //Cleanup (Set turnCount and CurrentPlayer), and matching GUI Elements
          gameIObject.setPlayer(inNextPlayer);
-         //int whosTurn = gameIObject.getPlayer() + 1;
-         /*if (gameIObject.getPlayer() == 0) {
-            currentColor = "Red";
-         } else if (gameIObject.getPlayer() == 1) {
-            currentColor = "Yellow";
-         }*/
          
          gameIObject.setTurn(gameIObject.getTurn() + 1);
          checkStalemate();
@@ -118,13 +109,7 @@ public class GameLogic {
    */
    public void checkStalemate() {
       if (gameIObject.getTurn() > 41) {
-//          String stalemateText = String.format("Nobody Wins");
-//          JOptionPane.showMessageDialog(null, stalemateText);
-            /**
-            FIGURE OUT: How to do this over the network (Necessary?)
-            */
-            
-            
+      
          gameIObject.resetBoard();
       }
    }

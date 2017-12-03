@@ -49,18 +49,6 @@ public class ServerGUI extends JFrame {
       central.add(new JScrollPane(jLogArea));
       southern.add(clientsConnected_label);
       
-       // localhost = new Socket();
-//         try {
-//            String x = sSocket.getInetAddress().toString();
-//         } catch (IOException e2){}
-//         
-//         }
-// //        ipLabel.setText(localhost.getHostAddress());
-// 
-//        ipLabel.setText(x);
-//        southern.add(ipLabel);
-      //northern.add(start);
-      //northern.add(stop);
       this.add(northern, BorderLayout.NORTH);
       this.add(central, BorderLayout.CENTER);
       this.add(southern, BorderLayout.SOUTH);
@@ -155,17 +143,12 @@ public class ServerGUI extends JFrame {
          
                if (clientsConnected % 2 != 0) {
                      if (message_sent == false) {
-                        //pwt.println("Please hold while I continue to look for another player");
-                        //pwt.flush();
                         message_sent = true;
                      }
-                  
                }
                else {
                   System.out.println("Starting Game...");
                   jLogArea.append("Starting Game " + (gamesConnected + 1) + "\n");
-                  //pwt.println("Starting Game...");
-                  //pwt.flush();
                   
                   gameStarted = true;
                   gamesConnected++;
@@ -211,10 +194,4 @@ public class ServerGUI extends JFrame {
       return respond;
       
    }
-   
-  
-
-
-      
-
 }
