@@ -5,7 +5,10 @@ import java.awt.*;
 import java.util.*;
 
 /**
-@author: Josh Schrader  
+@author: Josh Schrader
+
+@description: This class is a slot object, where the slots are drawn
+and the state of the slot is stored.  
 */
 
 public class BoardSlot extends JPanel{

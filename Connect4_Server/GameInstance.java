@@ -37,7 +37,6 @@ public class GameInstance {
 
    public GameInstance(Socket inSocketOne, Socket inSocketTwo, int inGameId) {
       
-      
       socketOne = inSocketOne;
       socketTwo = inSocketTwo;
       gameID = inGameId;
@@ -242,6 +241,7 @@ public class GameInstance {
             }
 
          }
+
       }
    } //END OF CLIENTLISTENER CLASS
 
