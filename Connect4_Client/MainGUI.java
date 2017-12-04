@@ -19,11 +19,18 @@ cannot hold them.
 
 public class MainGUI extends JFrame {
 //Original 1260x900
-   public static final int GUI_WIDTH =  1600;
-   public static final int GUI_HEIGHT = 900;
+   public static final int LARGE_GUI_WIDTH =  1600;
+   public static final int LARGE_GUI_HEIGHT = 900;
+   public static final int SMALL_GUI_WIDTH = 1250;
+   public static final int SMALL_GUI_HEIGHT = 700;
+   
    public static final int HEADER_WIDTH = 50;
    public static final int HEADER_HEIGHT = 50;
-   public static final int COLUMN_WIDTH = 1260;
+   public static final int LARGE_COLUMN_WIDTH = 1260;
+   public static final int SMALL_COLUMN_WIDTH = 840;
+   
+   public static boolean largeScreen;
+
    
    public static final int SERVER_PORT = 23001; // the port that the server is going to be listening on
    
@@ -59,8 +66,19 @@ public class MainGUI extends JFrame {
       Takes care of the main setup of the gui.
    */
    public MainGUI(Socket inSocket, String inUsername, String inIpAddress){
+   
+      Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+      double screenWidth = screenSize.getWidth();
+      double screenHeight = screenSize.getHeight();
+
+      if (screenWidth > 1600) {
+         setSize(LARGE_GUI_WIDTH, LARGE_GUI_HEIGHT);
+         largeScreen = true;
+      } else {
+         setSize(SMALL_GUI_WIDTH, SMALL_GUI_HEIGHT);
+         largeScreen = false;
+      }
       
-      setSize(GUI_WIDTH, GUI_HEIGHT);
       setLocationRelativeTo(null);
       setTitle("Connect Four");
       setLayout(new BorderLayout());
@@ -234,15 +252,7 @@ public class MainGUI extends JFrame {
          updatePlayerTurnGUI("0");
       }
       
-      currentTurn = currentTurn - 2;
-      
-//       if (MainGUI.getPlayer() == 0) {
-//          currentColor = "Red";
-//       } else if (MainGUI.getPlayer() == 1) {
-//          currentColor = "Yellow";
-//       }
       turnNumber.setText("Current Turn: 0");
-//       whosTurn.setText(currentColor + "'s Turn");
       
       //Re-Enable Buttons
       for (int i = 0; i < columns.size(); i++) {
@@ -293,8 +303,7 @@ public class MainGUI extends JFrame {
             }
 
          
-      }
-      else if (Integer.parseInt(playerTurn) == 1) {
+      } else if (Integer.parseInt(playerTurn) == 1) {
          
             if (clientIsPlayer == 0) {
                whosTurn.setText("Yellow's Turn (Their Turn)");
@@ -334,6 +343,9 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 0;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         currentTurn = 1;
+         turnNumber.setText("Current Turn: " + currentTurn);
+
          //Re-enables all buttons (for if the column was full)
          for (int i = 0; i < columns.size(); i++) {
             columns.get(i).checkColumnFull();
@@ -342,6 +354,10 @@ public class MainGUI extends JFrame {
          clientIsPlayer = 1;
          System.out.println("WinCheck: This is client " + clientIsPlayer);
          updatePlayerTurnGUI("0");
+         currentTurn = 1;
+         turnNumber.setText("Current Turn: " + currentTurn);
+
+         
          //Re-enables all buttons (for if the column was full)
          for (int i = 0; i < columns.size(); i++) {
             columns.get(i).checkColumnFull();
@@ -349,15 +365,6 @@ public class MainGUI extends JFrame {
          
       }
    }
-   
-   
-   
-   //THIS IS WHERE THE NETWORKING STUFF HAPPENS
-   
-   /**
-      Write code for sendNetworkData here
-      This will be whats called by BoardColumn's Actionlistener (BoardColumn line 86-90)
-   */ 
    
    public static int setColumnNum(int inColumnNum) {
       return inColumnNum;
@@ -377,12 +384,7 @@ public class MainGUI extends JFrame {
       clientWriter.println(columnNum);
       clientWriter.flush();
    }
-   
-   
-//    public static void main(String[] args){
-//       new MainGUI();
-//    }
-   
+      
    //INNER CLASS 
    class ServerListener implements Runnable {
       

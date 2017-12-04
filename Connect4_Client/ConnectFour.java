@@ -7,6 +7,13 @@ import java.net.*;
 import java.io.*;
 import java.awt.event.*;
 
+/**
+@author: Tom Margosian, Josh Schrader, Todd Bednarczyk
+
+@description: This Class sets up the connection to the Connect Four server and calls MainGUI.
+You input the server's IP and Chat Name here, and if the server fails to connect it will error out.
+
+*/
 
 public class ConnectFour extends JFrame {
 
@@ -32,14 +39,14 @@ public class ConnectFour extends JFrame {
    
    private JButton connectButton = new JButton("Connect");
    private JLabel ipLabel = new JLabel("IP Address");
-   private JLabel nameLabel = new JLabel("Name (For Chat)");
+   private JLabel nameLabel = new JLabel("Chat Name");
    private JLabel topLabel = new JLabel("Welcome to Connect4.");
 
    public ConnectFour(){
    
-      setSize(300, 175);
+      setSize(300, 170);
       setLocationRelativeTo(null);
-      setTitle("Connect Four - Connect");
+      setTitle("Connect4 - Server Connection");
       setLayout(new BorderLayout());
       setResizable(false);
       mainPanel.setLayout(new GridLayout(2,2));
@@ -57,9 +64,6 @@ public class ConnectFour extends JFrame {
       
       connectButton.addActionListener(actions);
       nameField.addKeyListener(actions);
-//      ipField.addKeyListener(actions);
-      
-//getRootPane().setDefaultButton(connectButton);
 
       add(headerPanel, BorderLayout.NORTH);
       add(mainPanel, BorderLayout.CENTER);
