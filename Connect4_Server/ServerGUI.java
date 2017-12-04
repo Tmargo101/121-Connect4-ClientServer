@@ -77,6 +77,15 @@ public class ServerGUI extends JFrame {
       }
       
    while(true) {
+      for (int b = 0; b < threads.size(); b++) {
+         if (threads.get(b).getSocket().isConnected() == false) {
+            clientsConnected--;
+            clientsConnected_label.setText("Clients Connected: " + clientsConnected);
+            
+         }
+      }
+         
+         
          Socket cSocket = null; //Client Socket
 
          try {
@@ -85,6 +94,7 @@ public class ServerGUI extends JFrame {
             clientsConnected++;
             
             clientsConnected_label.setText("Clients Connected: " + clientsConnected);
+            
             
 
          }
