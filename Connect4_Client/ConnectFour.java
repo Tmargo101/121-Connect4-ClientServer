@@ -125,7 +125,7 @@ public class ConnectFour extends JFrame {
               ip = ipAddress;
               validData = true;
             } else {
-               JOptionPane.showMessageDialog(this, "Invalid IP Address.");
+               JOptionPane.showMessageDialog(this, "Invalid IP Address.  Trying 'localhost'.");
                break;
             }
 
