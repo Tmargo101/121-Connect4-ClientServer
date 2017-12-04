@@ -116,6 +116,7 @@ public class ServerGUI extends JFrame {
             Thread t = new Thread(threads.get(clientsConnected - 1));
             t.start();
             
+            
          }
          
       } 
@@ -123,7 +124,7 @@ public class ServerGUI extends JFrame {
       
    
       
-   class ClientThread implements Runnable {
+   class ClientThread extends Thread {
       Socket cSocket = null;
       
       public ClientThread(Socket clientsSocket) {
@@ -174,9 +175,18 @@ public class ServerGUI extends JFrame {
                   gameInstance_threads.add(new GameInstance(threads.get(clientsConnected - 2).getSocket(), threads.get(clientsConnected - 1).getSocket(), gamesConnected));
                   gameLogic_threads.add(new GameLogic(gameInstance_threads.get(gamesConnected - 1)));
                   
+                 
                   
                }
+                  
             }
+            
+                  try{
+                     sleep(2);
+                  }
+                  catch (InterruptedException e1) {
+                     //
+                  }
          }
          
             System.out.println("Client disconnected!");
