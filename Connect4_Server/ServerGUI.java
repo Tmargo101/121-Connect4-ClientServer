@@ -175,7 +175,7 @@ public class ServerGUI extends JFrame {
             }
             
                   try{
-                     sleep(2);
+                     sleep(1000);
                   }
                   catch (InterruptedException e1) {
                      //
