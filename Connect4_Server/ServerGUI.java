@@ -24,7 +24,10 @@ public class ServerGUI extends JFrame {
    public JLabel jLogLabel = new JLabel("Log:");
    public JTextArea jLogArea = new JTextArea(10, 35);
    public JLabel clientsConnected_label = new JLabel("Clients Connected: 0");
+   public JLabel serverIP_label = new JLabel("                         Server IP: XXX.XXX.XXX.XXX");
+
    public JLabel ipLabel = new JLabel("");
+   
    
    public JButton start = new JButton("Start Server");
    public JButton stop = new JButton("Stop Server");
@@ -34,6 +37,10 @@ public class ServerGUI extends JFrame {
    ArrayList<GameInstance> gameInstance_threads = new ArrayList<GameInstance>();
 
    public ServerGUI() {
+      try{
+      String serverIP = (Inet4Address.getLocalHost().getHostAddress());
+      } catch(UnknownHostException uhe){}
+
       // Window setup
       this.setTitle("Server GUI");
       this.setSize(450, 250);
@@ -48,6 +55,14 @@ public class ServerGUI extends JFrame {
       central.add(jLogLabel);
       central.add(new JScrollPane(jLogArea));
       southern.add(clientsConnected_label);
+      
+      try{
+         String serverIP = (Inet4Address.getLocalHost().getHostAddress());
+         serverIP_label.setText("                         Server IP: " + serverIP);
+
+      } catch(UnknownHostException uhe){}
+
+      southern.add(serverIP_label);
       
       this.add(northern, BorderLayout.NORTH);
       this.add(central, BorderLayout.CENTER);
@@ -101,7 +116,8 @@ public class ServerGUI extends JFrame {
          }
          
          System.out.println("Client connected!");
-         jLogArea.append("Client connected!\n");
+         String ipConnected = cSocket.getRemoteSocketAddress().toString();
+         jLogArea.append("Client connected!  IP: "+ ipConnected.substring(1) + "\n");
          
          System.out.println(cSocket);
          
