@@ -1,5 +1,3 @@
-//VERSION 1.2 - MULTI THREADING WORKS - Caution, Don't try on a old computer.
-
 package Connect4_Server;
 
 import javax.swing.*;
@@ -9,6 +7,19 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
+
+/**
+@author: Brandon Hettler
+
+@description: ServerGUI acts as the main 'hub' for all client connections as it accepts it using
+server socket. After the client connects, a new thread instance of ClientThread is started which remains
+in the loop until another player is connected. After doing so, there socket connections are passed to 
+GameInstance/GameLogic on the server to begin the game.
+
+Although the client socket connections are passed to other classes on the server end, ServerGUI must remain
+open or the clients will be forced out.
+
+*/
 
 
 public class ServerGUI extends JFrame {
@@ -36,18 +47,21 @@ public class ServerGUI extends JFrame {
    ArrayList<GameLogic> gameLogic_threads = new ArrayList<GameLogic>();
    ArrayList<GameInstance> gameInstance_threads = new ArrayList<GameInstance>();
 
+
+
+    /**
+      ServerGUI Constructor
+   */
+   
    public ServerGUI() {
       try{
       String serverIP = (Inet4Address.getLocalHost().getHostAddress());
       } catch(UnknownHostException uhe){}
 
-      // Window setup
       this.setTitle("Server GUI");
       this.setSize(450, 250);
       this.setLocation(600, 50);
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-      //this.add(new JLabel("Server GUI - Coming Soon", SwingConstants.CENTER));
       
       JPanel central = new JPanel();
       JPanel northern = new JPanel();
@@ -71,6 +85,9 @@ public class ServerGUI extends JFrame {
 
       this.setVisible(true); //last note
 
+      /**
+      ChatThread Constructor - creates new chat
+      */
 
        Thread chatThread = new Thread() {
            @Override
@@ -82,7 +99,7 @@ public class ServerGUI extends JFrame {
        chatThread.start();
       
          
-         // SERVER INFORMATION
+      /** Server Information */
       try {
          sSocket = new ServerSocket(SERVER_PORT);
          jLogArea.append("Server Started!\n");
@@ -101,10 +118,10 @@ public class ServerGUI extends JFrame {
       }
          
          
-         Socket cSocket = null; //Client Socket
+         Socket cSocket = null; /* Client Socket */
 
          try {
-            // Wait for a connection
+            /* Wait for a connection */
             cSocket = sSocket.accept();
             clientsConnected++;
             
@@ -128,13 +145,15 @@ public class ServerGUI extends JFrame {
             Thread t = new Thread(threads.get(clientsConnected - 1));
             t.start();
             
-            
          }
          
       } 
     } 
-      
-   
+    
+    /**
+      ClientThread - creates new thread upon socket connection
+      of a client.
+    */
       
    class ClientThread extends Thread {
       Socket cSocket = null;
@@ -146,7 +165,6 @@ public class ServerGUI extends JFrame {
          
       public Socket getSocket() {
          return cSocket;
-         
       }
          
       
@@ -179,6 +197,7 @@ public class ServerGUI extends JFrame {
                   gameStarted = true;
                   gamesConnected++;
                   
+                  /** MULTI-THREADING CODE */
                   gameInstance_threads.add(new GameInstance(threads.get(clientsConnected - 2).getSocket(), threads.get(clientsConnected - 1).getSocket(), gamesConnected));
                   gameLogic_threads.add(new GameLogic(gameInstance_threads.get(gamesConnected - 1)));
                   
@@ -199,31 +218,16 @@ public class ServerGUI extends JFrame {
             
             clientsConnected--;
             clientsConnected_label.setText("Clients Connected: " + clientsConnected);
-         
       }
-      
       
    }
 
+   /**
+      Main Method - creates new object of server GUI
+   */
    
    public static void main (String [] args) {
       new ServerGUI();
    }
    
-   
-   
-   public String changeCourse(int columnNum) {
-      
-      int columnNum_1 = columnNum;
-      int rowNum = 0;
-      int state = 1;
-      int playerTurn = 2;
-      int winCondition = 0;
-      
-      String respond = Integer.toString(columnNum_1) + "," + Integer.toString(rowNum) + "," + Integer.toString(state) + "," + Integer.toString(playerTurn) + "," + Integer.toString(winCondition);
-      
-      
-      return respond;
-      
-   }
 }
