@@ -111,6 +111,7 @@ public class GameLogic {
       if (gameIObject.getTurn() > 41) {
       
          gameIObject.resetBoard();
+         didSomeoneWin = 3;
       }
    }
         
